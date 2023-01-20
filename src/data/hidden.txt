@@ -1,0 +1,5 @@
+c:\windows\bitlockerdiscoveryvolumecontents
+c:\windows\elambkup
+c:\windows\installer
+c:\windows\languageoverlaycache
+c:\windows\windowsshell.manifest
