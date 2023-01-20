@@ -16,7 +16,7 @@ public class ClassMain01 {
 
 		// 클래스 이름으로 가져오기
 		Scanner scan = new Scanner(System.in) ;
-		System.out.println("클래스 선택 : Human(1), Sport(2)");
+		System.out.print("클래스 선택 : Human(1), Sport(2) : ");
 		int menu = scan.nextInt() ;
 		String className = null ;
 

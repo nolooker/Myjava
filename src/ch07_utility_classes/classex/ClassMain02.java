@@ -1,10 +1,9 @@
 package ch07_utility_classes.classex;
 
 public class ClassMain02 {
-
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
 
-		Human class01 = new Human();
+		Human class01 = new Human("김철수", "마포", 20);
 		System.out.println(class01);
 
 		String className = "ch07_utility_classes.classex.Human";
