@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class ClassMain03 {
-
 	public static void main(String[] args) throws ClassNotFoundException {
 
 		String className = "ch07_utility_classes.classex.Human";
