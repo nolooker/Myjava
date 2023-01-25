@@ -30,13 +30,18 @@ public class ClassMain01 {
 		}
 
 		Class class03 = null;
+
 		try {
+
+			System.out.println("class.forName() 메소드를 이용한 동적 객체 생성");
 			class03 = Class.forName(className);
 
 			System.out.println(class03.getName());
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
+
+			System.out.println(className + "은(는) 존재하지 않는 클래스입니다.");
+			e.printStackTrace();
 		}
 	}
 }

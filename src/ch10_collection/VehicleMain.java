@@ -27,6 +27,7 @@ public class VehicleMain {
 
                 // 맵 구조에 커맨드와 관련 교통 수단 객체를 넣기
                 map.put(command, handlerInstance);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
