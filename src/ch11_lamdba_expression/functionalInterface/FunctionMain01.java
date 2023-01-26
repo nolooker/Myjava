@@ -22,13 +22,18 @@ public class FunctionMain01 {
         Function<Integer, String> minus =
                 (num) -> Integer.toString(num - SU);
 
-//        Function<Integer, String> multiple =
-//                (num) -> Integer.toString(num * SU);
+        Function<Integer, String> multiple =
+                (num) -> Integer.toString(num * SU);
+
+        BiFunction<Integer,Integer,Double> bigFunction
+                = (first,second) -> ((double)first+second)/2;
+        double sample = bigFunction.apply(30,40) ;
+        System.out.println("두 숫자 평균 sample : " +sample);
 
         int su01 = 14;
         System.out.println("더하기 : " + plus.apply(su01));
         System.out.println("빼기 : " + minus.apply(su01));
-//        System.out.println("50 * 100 = " + multiple.apply(50));
+        System.out.println("50 * 100 = " + multiple.apply(50));
 
         //매핑 : 두 Integer 값 - Double 값
         BiFunction<Integer, Integer, Double> biFunction = (a, b) -> (double) ((a)+b)/2;
@@ -38,10 +43,12 @@ public class FunctionMain01 {
         System.out.println("객체와 연동하기");
         Saram student = new Saram("hong", "홍길동", 85, 60);
 
+
         //매핑 : Saram객체 - Saram의 Integer 값
         Function<Saram, Integer> function = (a) -> a.getKor();
         int result01 = function.apply(student);
         System.out.println(student.getName() + "의 국어 점수 : " + result01);
+
 
         //매핑 : Double 값 - Integer 값
         DoubleFunction<Integer> doubleFunction = (a) -> {

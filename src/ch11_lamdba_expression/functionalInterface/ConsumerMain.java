@@ -31,5 +31,52 @@ public class ConsumerMain {
         System.out.println("5년 뒤의 나이");
         ObjIntConsumer<Human> addAge = (a, b) -> System.out.println("이름 : "+ a.getName()+ ", 나이 : "+ (a.getAge() + b));
         addAge.accept(new Human("김철수", 25), 5);
+
+
+        int afterAge = 5 ;
+        addAge.accept(new Human("김철수",25),afterAge);
+
+
+
+
+
+        // 미성년자 체크) Consumer.accept("김철수", 12); -> '김철수'님은 미성년자 입니다.
+
+        BiConsumer<String, Integer> check = (name, age) -> {
+
+            String result = age >= 19 ? "성인" : "미성년자";
+
+            System.out.println(age + "살 이므로" + "'" + name + "'님은 " + result + " 입니다.");
+
+        };
+
+        check.accept("김철수", 12);
+
+        for (int i = 0; i < 3; i++) {
+
+            baetimes.accept(BAE * (i + 1));
+
+        }
+
+        // 1 * 1 = 1
+        // 2 * 2 = 4
+        // ...
+        // 9 * 9 = 81
+
+        Consumer<Integer> bb = (num) -> {
+
+            String message = "%d * %d = %2d\n";
+            System.out.printf(message, num, num, (num * num));
+
+        };
+
+        for (int i = 1; i < 10; i++) {
+
+            bb.accept(i);
+
+        }
+
     }
+
+
 }
