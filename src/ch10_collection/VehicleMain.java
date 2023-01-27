@@ -4,51 +4,44 @@ import java.util.*;
 
 public class VehicleMain {
     public static void main(String[] args) {
-        Map<String, VehicleController> map = new HashMap<>();
+        Map<String, VehicleController> map = new HashMap<>() ;
 
-        Properties prop = new Properties();
-        prop.put("car", "ch10_collection.CarController") ;
-        prop.put("horse", "ch10_collection.HorseController") ;
-        prop.put("airplane", "ch10_collection.AirplaneController") ;
+        Properties prop = new Properties() ;
+        prop.put("car", "ch10_collection.CarController");
+        prop.put("horse", "ch10_collection.HorseController");
+        prop.put("airplane", "ch10_collection.AirplaneController");
 
         Set<Object> keyset = prop.keySet() ;
-
         for(Object key:keyset){
             String command = (String)key ;
-            String commandName = prop.getProperty(command);
+            String className = prop.getProperty(command) ;
+            try{
+                Class<?> myobject = Class.forName(className) ;
 
-            try {
-                // commandName이라는 문자열을 이용하여 객체 생성
-                Class<?> handlerClass = Class.forName(commandName);
+                VehicleController vehicle = (VehicleController)myobject.newInstance() ;
+                map.put(command, vehicle) ;
 
-                // 자바 동적 객체 생성하기
-                VehicleController handlerInstance =
-                        (VehicleController) handlerClass.getDeclaredConstructor().newInstance();
-
-                // 맵 구조에 커맨드와 관련 교통 수단 객체를 넣기
-                map.put(command, handlerInstance);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            }catch(Exception err){
+                err.printStackTrace();
             }
         }
-
-        System.out.print("선택 메뉴 : 1(car), 2(horse), 3(airplane) : ");
-        Scanner scan = new Scanner(System.in);
+        System.out.print("메뉴 선택 : 1(car), 2(horse), 3(airplane) : ");
+        Scanner scan = new Scanner(System.in) ;
         int menu = scan.nextInt() ;
         String command = null ;
         if(menu==1){
             command = "car" ;
         }else if(menu==2){
             command = "horse" ;
-        }else if(menu==3){
+        }if(menu==3){
             command = "airplane" ;
         }else{
 
         }
+
         VehicleController action = map.get(command) ;
         if(action==null){
-            System.out.println("잘못된 커맨드입니다.");
+            System.out.println("잘못된 요청 커맨드입니다.");
         }else{
             action.drive();
         }

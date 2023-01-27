@@ -1,67 +1,59 @@
 package ch11_lamdba_expression.functionalInterface;
 
+import ch11_lamdba_expression.model.Saram;
+
 import java.util.function.BiFunction;
 import java.util.function.DoubleFunction;
 import java.util.function.Function;
-import java.util.function.ToDoubleBiFunction;
 
 public class FunctionMain01 {
     public static void main(String[] args) {
-//        다음 예제는 apply() 메서드 사용 방법입니다.
-//                먼저, 세 개의 Function 타입의 객체를 생성하며 특정 작업을 수행 후 값을 반환하는 람다 표현식을 할당합니다.
-//
-//        - plus 객체는 Integer 타입의 매개변수를 전달받아 100을 더한 결과를 문자열로 반환합니다.
-//                - minus 객체는 Integer 타입의 매개변수를 전달받아 100을 뺄셈한 결과를 문자열로 반환합니다.
-//                - multiple 객체는 Integer 타입의 매개변수를 전달받아 100을 곱한 결과를 문자열로 반환합니다.
-
         final int SU = 10 ;
 
-        Function<Integer, String> plus =
-                (num) -> Integer.toString(num + SU);
+        System.out.println("정수 객체를 문자열 타입으로 반환");
+        Function<Integer, String> plus = (num) -> Integer.toString(num + SU) ;
+        Function<Integer, String> minus = (num) -> Integer.toString(num - SU) ;
 
-        Function<Integer, String> minus =
-                (num) -> Integer.toString(num - SU);
-
-        Function<Integer, String> multiple =
-                (num) -> Integer.toString(num * SU);
-
-        BiFunction<Integer,Integer,Double> bigFunction
-                = (first,second) -> ((double)first+second)/2;
-        double sample = bigFunction.apply(30,40) ;
-        System.out.println("두 숫자 평균 sample : " +sample);
-
-        int su01 = 14;
+        int su01 = 14 ;
         System.out.println("더하기 : " + plus.apply(su01));
         System.out.println("빼기 : " + minus.apply(su01));
-        System.out.println("50 * 100 = " + multiple.apply(50));
 
-        //매핑 : 두 Integer 값 - Double 값
-        BiFunction<Integer, Integer, Double> biFunction = (a, b) -> (double) ((a)+b)/2;
-        double result02 = biFunction.apply(3, 5);
-        System.out.println("두 숫자 평균 : "+ result02);
+        System.out.println("정수 2개의 산술 평균을 double 타입으로 반환");
+        BiFunction<Integer, Integer, Double> biFunction
+                = (first, second) -> ((double)first+second)/2 ;
+        double result02 = biFunction.apply(30, 40) ;
+        System.out.println("두 숫자 산술 평균 : " + result02);
 
         System.out.println("객체와 연동하기");
-        Saram student = new Saram("hong", "홍길동", 85, 60);
+        Saram hong = new Saram("hong", "홍길동", 80, 60, 50);
+        String message = "%s님의 국어/영어 평균 점수 : %.3f\n" ;
+        System.out.printf(message, hong.getName(), biFunction.apply(hong.getKor(), hong.getEng()) );
 
+        Function<Saram, Integer> getTotal = (saram) -> saram.getKor()+saram.getEng()+saram.getMath();
+        int totalJumsu = getTotal.apply(hong);
+        message = "%s님의 총점 : %3d\n" ;
+        System.out.printf(message, hong.getName(), totalJumsu);
 
-        //매핑 : Saram객체 - Saram의 Integer 값
-        Function<Saram, Integer> function = (a) -> a.getKor();
-        int result01 = function.apply(student);
-        System.out.println(student.getName() + "의 국어 점수 : " + result01);
+        System.out.println("Double 타입을 Integer 타입으로 변환하기");
+        DoubleFunction<Integer> double2Int = (asdf) -> {
+            Double result = Math.ceil(asdf) ;
+            return result.intValue() ;
+        } ;
 
+        double su = 153.4 ; // 올림하면 154
+        System.out.println("실수형 올림 : " + double2Int.apply(su));
 
-        //매핑 : Double 값 - Integer 값
-        DoubleFunction<Integer> doubleFunction = (a) -> {
-            Double d = Math.floor((a));
-            return d.intValue();
-        };
-        int result03 = doubleFunction.apply(246.71);
-        System.out.println("소수점 버리기 : "+ result03);
+        System.out.println("실수형 배열 요소를 올림하여 정수형 배열 만들기");
+        double[] dArr = {15.4, 18.5, 23.1} ;
 
-        //매핑 : Integer, Integer - Double
-        ToDoubleBiFunction<Integer, Integer> tdbFunction;
-        tdbFunction = (math, english) -> (double)(math+english)/2;
-        double result04 = tdbFunction.applyAsDouble(student.getKor(), student.getEng());
-        System.out.println("홍길동의 평균 점수 : "+ result04);
+        int[] iArr = new int[dArr.length] ;
+
+        for (int i = 0; i < iArr.length ; i++) {
+            iArr[i] = double2Int.apply(dArr[i]) ;
+        }
+
+        for(int item : iArr){
+            System.out.println(item);
+        }
     }
 }
